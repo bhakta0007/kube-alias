@@ -387,7 +387,7 @@ def parseTokens(node=None, tokens=[], cmdList=[]):
                         print("    {}".format(fa))
                     print("{} needs {} match. Provide more specific substring input".format(finalCmd, maxMatches))
                     sys.exit(6)
-            print(finalArgs)
+            # print(finalArgs)
 
     matchArgs = tNode["match-args"]
     defaultArgs = tNode["default-args"]
@@ -416,7 +416,7 @@ def main():
     cmdList = [node["key"]]
     tokens = sys.argv[1:]
     cmd = parseTokens(node=node, tokens=tokens, cmdList=cmdList)
-    print(cmd)
+    # print(cmd)
     execute_commands([cmd])
 
 
