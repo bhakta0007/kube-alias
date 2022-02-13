@@ -324,20 +324,8 @@ def parseTokens(node=None, tokens=[], cmdList=[]):
                 tNode["args"] = tokens[tIdx + 1:]
 
     if not tNode:
-        import pdb
-        pdb.set_trace()
-        # print("Final node {}".format(node))
-        cmd = " ".join(cmdList)
-        terminal = node.get("terminal", False)
-        if not terminal:
-            print("Incomplete command \"{}\"".format(cmd))
-            sys.exit(4)
-        tNode["cmd"] = " ".join(cmdList)
-        tNode["match-args"] = node.get("match-args")
-        tNode["default-args"] = node.get("default-args")
-        tNode["match-cmds"] = node.get("match-cmds", [])
-        tNode["match-append"] = node.get("match-append", False)
-        tNode["args"] = tokens[tIdx + 1:]
+        print("Error - Could not resolve command")
+        sys.exit(7)
 
     # We have a terminal node.
     # If there are match-args, then add that to the command to get final command
@@ -356,10 +344,12 @@ def parseTokens(node=None, tokens=[], cmdList=[]):
             matchExtract = matchCmd.get("extract")
             maxMatches = matchCmd.get("max-matches")
             cmd = "{}".format(matchCmd["cmd"])
-            matchFilterArgs = [x for x in matchArgs if "-" != x[0]]
-            matchFilterExcludedArgs = [x for x in matchArgs if "-" == x[0]]
+            matchFilterArgs = matchArgs[0]
+            matchFilterExcludedArgs = matchArgs[1:]
+            # matchFilterArgs = [x for x in matchArgs if "-" != x[0]]
+            # matchFilterExcludedArgs = [x for x in matchArgs if "-" == x[0]]
             if matchFilterArgs:
-                cmd += " | egrep \"{}\"".format("|".join(matchFilterArgs))
+                cmd += " | egrep \"{}\"".format(matchFilterArgs)
             out, err, retCode = run_cmd(cmd)
             if retCode:
                 print("Error running \"{}\", out {} err {} retCode {}".format(cmd, out, err, retCode))
@@ -424,8 +414,6 @@ def main():
 
     node = _CMD_MAP
     cmdList = [node["key"]]
-    # import pdb; pdb.set_trace()
-    # tokens = [node["key"][0]]
     tokens = sys.argv[1:]
     cmd = parseTokens(node=node, tokens=tokens, cmdList=cmdList)
     print(cmd)

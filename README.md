@@ -115,3 +115,37 @@ Executing : kubectl logs lilac-api-d689b97b4-tpq5v -n lilac-mgmt
 ----------------------------------------------------------------
 <snip>
 ```
+
+4. Tail logs (for a container within a pod)
+
+
+Instead of:
+
+```
+kubectl logs pg-postgresql-0 -n lilac-sql -c metrics
+```
+
+use:
+
+```
+bhakta@bhakta-kube1:~$ k l sql-0 -c metrics
+['pg-postgresql-0 -n lilac-sql -c metrics']
+kubectl logs pg-postgresql-0 -n lilac-sql -c metrics
+
+Executing : kubectl logs pg-postgresql-0 -n lilac-sql -c metrics
+----------------------------------------------------------------
+
+time="2022-01-31T12:24:56Z" level=info msg="Established new database connection to \"127.0.0.1:5432\"." source="postgres_exporter.go:878"
+time="2022-01-31T12:24:57Z" level=info msg="Established new database connection to \"127.0.0.1:5432\"." source="postgres_exporter.go:878"
+time="2022-01-31T12:24:59Z" level=info msg="Established new database connection to \"127.0.0.1:5432\"." source="postgres_exporter.go:878"
+time="2022-01-31T12:24:59Z" level=info msg="Semantic Version Changed on \"127.0.0.1:5432\": 0.0.0 -> 11.13.0" source="postgres_exporter.go:1405"
+time="2022-01-31T12:24:59Z" level=info msg="Starting Server: :9187" source="postgres_exporter.go:1672"
+bhakta@bhakta-kube1:~$
+```
+
+# Adding more commands
+
+Add into _CMD_MAP in kube-alias.py
+
+
+# TODO:
