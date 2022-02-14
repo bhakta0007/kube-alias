@@ -7,7 +7,7 @@ import sys
 CGREEN = '\33[32m'
 CEND = '\033[0m'
 
-dollaRE = re.compile("\$[0-9]+$")       # noqa: W605
+dollarValueRE = re.compile("\$[0-9]+$")       # noqa: W605
 
 _CMD_MAP = {
     "key": "kubectl",
@@ -364,7 +364,7 @@ def parseTokens(node=None, tokens=[], cmdList=[]):
                     else:
                         sp = line.split()
                     for token in matchExtract:
-                        if dollaRE.match(token):
+                        if dollarValueRE.match(token):
                             replacedToken = token.replace("$", "")
                             try:
                                 tokenIdx = int(replacedToken)

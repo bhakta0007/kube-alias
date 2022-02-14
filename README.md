@@ -1,5 +1,8 @@
 # kube-alias
-Short-hand commands for some of the day-to-day kubernetes CLI
+Short-hand commands for some of the day-to-day kubernetes CLI. The goal is to minimize the number of characters to type and work across namespaces. The utility is easy to extend to other commands.
+
+![image info](./demo.gif)
+
 
 # Install/setup
 
