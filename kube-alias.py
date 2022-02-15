@@ -18,6 +18,12 @@ _CMD_MAP = {
             "description": "Get Kubectl objects",
             "children": [
                 {
+                    "key": "endpoints",
+                    "description": "List Endpoints",
+                    "terminal": True,
+                    "match-args": "-A",
+                },
+                {
                     "key": "pods",
                     "description": "List pods",
                     "terminal": True,
@@ -27,7 +33,13 @@ _CMD_MAP = {
                     "key": "namespaces",
                     "description": "List namespaces",
                     "terminal": True,
-                }
+                },
+                {
+                    "key": "services",
+                    "description": "List Services",
+                    "terminal": True,
+                    "match-args": "-A",
+                },
             ]
         },
         {
@@ -291,13 +303,16 @@ def parseTokens(node=None, tokens=[], cmdList=[]):
     tNode = {}
     cmd = ""
     for tIdx, token in enumerate(tokens):
-        if len(token) > len(key):
+        children = node.get("children", [])
+        maxChildKeyLen = 0
+        if children:
+            maxChildKeyLen = max([len(x["key"]) for x in children])
+        if len(token) > maxChildKeyLen:
             if tNode:
                 break
             printInvalidToken(token, cmdList)
 
         # Find matching child node for the token
-        children = node.get("children", [])
         if children:
             matchingIdx = getMatchingChildren(children, token, cmdList=cmdList)
             if matchingIdx is None:
