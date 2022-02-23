@@ -6,8 +6,12 @@ Short-hand commands for some of the day-to-day kubernetes CLI. The goal is to mi
 
 # Install/setup
 
-1. Make sure kube-alias.py is executable (if not already): chmod +x kube-cmd.py
-2. Optionally set up an alias: alias k='/path/to/kube-cmd.py'
+[This script has been tested on ubuntu/centos]
+
+1. Download kube-alias.py (this is the only script you need from this repo)
+2. Make sure kube-alias.py is executable (if not already): chmod +x kube-alias.py
+3. Optionally set up an alias: alias k='/path/to/kube-cmd.py'
+4. You need python installed in your system
 
 
 # Usage example
